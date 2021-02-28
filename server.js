@@ -31,8 +31,9 @@ app.get('/searches/new', (req, res) => {
 app.post('/searches', (req, res) => {
     let sort = req.body.sort;
     let search = req.body.search;
-
-    let url = `https://www.googleapis.com/books/v1/volumes?q=${search}+${sort}:keyes`;
+    //inauthor
+    //intitle:
+        let url = `https://www.googleapis.com/books/v1/volumes?q=${search}+${sort}:keyes`;
 
     superagent.get(url)
         .then(results => {
@@ -42,6 +43,10 @@ app.post('/searches', (req, res) => {
             })
             res.render('./pages/searches/searches', { bookLists: book });
         });
+});
+//error route
+app.get('*',(req,res)=>{
+    res.render('pages/error');
 });
 
 //constructors

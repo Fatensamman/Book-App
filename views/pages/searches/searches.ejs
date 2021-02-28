@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,18 +7,23 @@
     <title>Book-app</title>
     <!-- favicon -->
     <link rel="shortcut icon" href="https://www.freeiconspng.com/uploads/book-icon--icon-search-engine-6.png"
-        type="image/x-icon">
+            type="image/x-icon">
     <!-- style -->
-    <link rel="stylesheet" href="../styles/style.css">
-</head>
-
+    <link rel="stylesheet" href="styles/style.css">
+     <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/a24ea374e8.js" crossorigin="anonymous"></script>
+</head>  
 <body>
     <header>
-        <h2>Best Books</h2>
-        <ul>
-            <li><a href="/">Home Searches</a></li>
-            <li><a href="/serches/new">Search from API Books</a></li>
+        <h2>Best Books!</h2>
+        <div><i class="fas fa-bars btn"></i></div>
+        <div class = "show hide">
+        <ul class = "headerli hide">
+            <li ><a href="/">Home Searches</a></li>
+            <li ><a href="/searches/new">Search from API Books</a></li>
         </ul>
+    </div>
+
     </header>
     <main>
         <% bookLists.forEach(book=>{%>
@@ -40,13 +44,14 @@
         <% }); %> 
     </main>
     <footer>
-        <ul>
-            <li>#</li>
-            <li>#</li>
-            <li>#</li>
-            <li>#</li>
+        <ul class="footerli">
+            <li> <a href="https://www.yahoo.com"><i class="fas fa-envelope-square fig"></i></a></li>
+            <li> <a href="https://www.twitter.com"><i class="fab fa-twitter fig"></i></a></li>
+            <li> <a href="https://www.github.com"><i class="fab fa-github-alt fig"></i></a></li>
+            <li> <a href="https://www.linkedin.com"><i class="fab fa-linkedin fig"></i></a></li>
         </ul>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="app.js"></script>
 </body>
-
 </html>
