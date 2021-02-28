@@ -16,7 +16,9 @@ app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
-
+app.get('/hello',(req,res)=>{
+res.render('./pages/index');
+})
 
 // listin
 app.listen(PORT,()=>{

@@ -1,3 +1,6 @@
-header{
+body{
     background-color: grey;
+}
+h1{
+    color: red;
 }
