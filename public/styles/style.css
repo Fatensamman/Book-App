@@ -4,3 +4,8 @@ body{
 h1{
     color: red;
 }
+
+@import url(base.css);
+@import url(layout.css);
+@import url(modules.css);
+@import url(reset.css);
