@@ -1,11 +1,110 @@
-body{
-    background-color: grey;
-}
-h1{
-    color: red;
-}
-
+@import url(reset.css);
 @import url(base.css);
 @import url(layout.css);
 @import url(modules.css);
-@import url(reset.css);
+
+html{
+    height: 100%;
+    width: 100%;
+    scroll-behavior: smooth;
+}
+body {
+    height: 100%;
+    width: 100%;
+   display: table;
+  background-color:  rgb(114, 114, 114)
+}
+  header {
+    background-color: rgb(17, 17, 17);
+}
+h2{
+    color: wheat;
+    float: left;
+    line-height: 110px;
+}
+.btn{
+    color: rgba(240, 218, 179, 0.76);
+    font-size: 35px;
+    float : right;
+ }
+ .hide{
+    display: none;
+}
+.headerli {
+    display: grid;
+    width: 100%;
+    grid-auto-rows: minmax(50px,auto);
+    justify-items: center;
+    align-items: center;
+    background-color: rgb(17, 17, 17);
+    opacity: 0.99;
+}
+
+.headerli a{
+    color: wheat;
+    text-decoration: none;  
+}
+
+main{
+    display: table-row;
+    height: 100%;
+}
+.a h4{
+    color: wheat;
+    text-align: center;
+}
+.a{
+    background-color: rgb(59, 59, 59);
+}
+
+footer {
+    background-color: rgb(17, 17, 17);
+}
+.footerli{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    align-items: center;  
+}
+
+.fig{
+   color: rgba(240, 218, 179, 0.76);
+}
+@media screen and (min-width:1024px){
+
+header{
+    height: 110px;
+}
+h2{
+    font-size: 40px;
+    margin-left: 50px;
+}
+ .btn{
+    margin-right: 30px;
+    margin-top: 30px;
+ }
+
+.headerli a{
+    font-size: 20px;  
+}
+
+.a{
+    height: 110px;
+}
+.a h4{
+    font-size: 25px;
+    line-height: 110px;
+}
+
+
+footer {
+    height: 100px;
+}
+.footerli{ 
+    height: 100px;
+}
+
+.fig{
+   font-size: 25px;
+}
+}
