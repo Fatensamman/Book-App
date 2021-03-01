@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,46 +8,42 @@
     <title>Book-app</title>
     <!-- favicon -->
     <link rel="shortcut icon" href="https://www.freeiconspng.com/uploads/book-icon--icon-search-engine-6.png"
-            type="image/x-icon">
+        type="image/x-icon">
     <!-- style -->
-    <link rel="stylesheet" href="styles/style.css">
-     <!-- font awesome -->
+    <link rel="stylesheet" href="../styles/style.css">
+    <!-- font awesome -->
     <script src="https://kit.fontawesome.com/a24ea374e8.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <header>
         <h2>Best Books!</h2>
         <div><i class="fas fa-bars btn"></i></div>
-        <div class = "show hide">
-        <ul class = "headerli hide">
-            <li ><a href="/">Home Searches</a></li>
-            <li ><a href="/searches/new">Search from API Books</a></li>
-        </ul>
-    </div>
+        <div class="show hide">
+            <ul class="headerli hide">
+                <li><a href="/">Home Searches</a></li>
+                <li><a href="/searches/new">Search from API Books</a></li>
+            </ul>
+        </div>
 
     </header>
     <main>
-        <div class = "a b"><h4>(<%=booksList.length%>)Saved Books</h4></div>
-
         <div class="template">
-            <% booksList.forEach(book=>{%>
-                
-                <div class="card">
-                    <div class="img-container">
-                        <img src=<%=book.image %> alt="book">
-                    </div>
-                    <h3>
-                        <%=book.title %>
-                    </h3>
-                    <p>
-                        <%= book.author %>
-                    </p>
-                    <p>
-                        <%= book.description %>
-                    </p>
-                    <button><a href="/book/<%=book.id%>">View Detailes</a></button>
+            
+            <div class="card">
+                <div class="img-container">
+                    <img src=<%=book.image %> alt="book">
                 </div>
-                <% }); %>
+                <h3>
+                    <%=book.title %>
+                </h3>
+                <p>
+                    <%= book.author %>
+                </p>
+                <p>
+                    <%= book.description %>
+                </p>
+            </div>
         </div>
     </main>
     <footer>
@@ -58,6 +55,7 @@
         </ul>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
-    <script src="app.js"></script>
+    <script src="../app.js"></script>
 </body>
+
 </html>
