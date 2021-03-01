@@ -2,7 +2,7 @@
 @import url(base.css);
 @import url(layout.css);
 @import url(modules.css);
-
+/* all */
 html{
     height: 100%;
     width: 100%;
@@ -14,15 +14,23 @@ body {
    display: table;
   background-color:  rgb(114, 114, 114)
 }
+/* ***********header*********** */
   header {
+      display: block;
     background-color: rgb(17, 17, 17);
+    height: 110px;   
+    
 }
-h2{
+header h2{
     color: wheat;
     float: left;
     line-height: 110px;
+    font-size: 40px;
+    margin-left: 50px;
 }
 .btn{
+    margin-right: 30px;
+    margin-top: 30px;
     color: rgba(240, 218, 179, 0.76);
     font-size: 35px;
     float : right;
@@ -37,74 +45,120 @@ h2{
     justify-items: center;
     align-items: center;
     background-color: rgb(17, 17, 17);
-    opacity: 0.99;
+    opacity: 0.99; 
 }
 
 .headerli a{
     color: wheat;
-    text-decoration: none;  
+    text-decoration: none; 
+    font-size: 20px;   
 }
+/* *********** end header*********** */
 
+
+/* *********** Main *********** */
+/* ***** base main ******  */
 main{
     display: table-row;
     height: 100%;
 }
 .a h4{
+    font-size: 25px;
+    line-height: 110px;
     color: wheat;
     text-align: center;
 }
 .a{
+    height: 110px;
     background-color: rgb(59, 59, 59);
 }
+/* ***** end base main ******  */
 
+
+/* ***** searches main*****  */
+.template{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+    justify-content: center;
+    align-items: center;
+    grid-gap: 50px;  
+    margin:60px 0px;
+}
+.card{
+  box-sizing: border-box;
+  background-color: rgb(163, 163, 163);
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  width: 300px;
+  height: 400px;
+  box-shadow: rgb(6 24 44 / 40%) 0px 5px 6px 4px, rgb(6 24 44 / 65%) 0px 0px 8px -6px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+/* *** scroll*** */
+/* .card::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  Track
+  .card::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  Handle
+  .card ::-webkit-scrollbar-thumb {
+    background: rgb(10, 10, 10); 
+    border-radius: 10px;
+  }
+  
+  Handle on hover
+  .card::-webkit-scrollbar-thumb:hover {
+    background: #3a3a3a; 
+  } */
+.img-container{
+   margin-top:40px;
+}
+.template h3{
+    margin-top: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+}
+.template p{
+    margin-top: 10px;
+    text-align: center;
+}
+/* *****  end searches main*****  */
+/* *****  end new search main*****  */
+.search{
+    box-sizing: border-box;
+    
+}
+#forsearch{
+    display: grid;
+    grid-template-rows: repeat(auto-fit, 70px);
+      justify-items: center;
+  align-items: center;
+}
+
+
+/* ***** footer*****  */
 footer {
+    height: 100px;
     background-color: rgb(17, 17, 17);
 }
 .footerli{
+    height: 100px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-items: center;
     align-items: center;  
 }
-
 .fig{
+    font-size: 25px;
    color: rgba(240, 218, 179, 0.76);
 }
-@media screen and (min-width:1024px){
-
-header{
-    height: 110px;
-}
-h2{
-    font-size: 40px;
-    margin-left: 50px;
-}
- .btn{
-    margin-right: 30px;
-    margin-top: 30px;
- }
-
-.headerli a{
-    font-size: 20px;  
-}
-
-.a{
-    height: 110px;
-}
-.a h4{
-    font-size: 25px;
-    line-height: 110px;
-}
-
-
-footer {
-    height: 100px;
-}
-.footerli{ 
-    height: 100px;
-}
-
-.fig{
-   font-size: 25px;
-}
-}
+/* ***** end footer ***** */
