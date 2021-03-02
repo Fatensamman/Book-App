@@ -1,11 +1,13 @@
 'use strict';
-
+let c = console
 //libraries
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const superagent = require('superagent');
 const pg = require('pg');
+const methodOverride = require('method-override');
+
 
 ///// app setup //////
 const app = express();
@@ -16,6 +18,7 @@ app.use(express.static('./public'));
 // to add data to body using middlewhere
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'))
 
 // const client = new pg.Client(process.env.DATABASE_URL);
 const client = new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false }, });
@@ -34,8 +37,46 @@ app.get('/book/:bookid', idhandeler);
 //addbook to bookshelf
 app.post('/books', bookshelfHandeler);
 //error route
-app.get('*', errorHandeler);
 
+// update book details route
+app.get('/book/update/:bookid', (req, res) => {
+    let SQL = `SELECT * FROM books WHERE id = $1;`;
+    let safe = [req.params.bookid]
+    client.query(SQL, safe)
+        .then(result => {
+            res.render('pages/books/edit', { book: result.rows[0] });
+        })
+    .catch(error => {
+        console.log('error', error.message);
+    });
+});
+app.put('/book/:id', (req, res) => {
+    let { image, title, author, description } = req.body;
+    let SQL = `UPDATE books SET image=$1, title=$2, author=$3, description=$4 WHERE id =$5 RETURNING id;`;
+    let safeValues = [image, title, author, description, req.params.id];
+
+    client.query(SQL, safeValues)
+        .then((result) => {
+            c.log('/books/:id,result', result)
+            res.redirect(`/book/${result.rows[0].id}`);
+        })
+    .catch((error) => {
+        console.log('Error: ', error.message);
+    });
+
+})
+// delete 
+app.delete('/book/:id', (req, res) => {
+    let SQL = `DELETE FROM books WHERE id =$1;`;
+    let value = [req.params.id];
+    client.query(SQL, value)
+        .then((result) => {
+            res.redirect(`/`);
+        })
+    .catch((error) => {
+        console.log('Error: ', error.message);
+    });
+})
 
 
 ////// functions ////// 
@@ -45,9 +86,9 @@ function homeHandeler(req, res) {
     client.query(SQL).then(result => {
         res.render('./pages/index', { booksList: result.rows });
     })
-        .catch((error => {
-            console.log(`error in home`, error);
-        }));
+    // .catch((error => {
+    //     console.log(`error in home`, error);
+    // }));
 };
 
 //searches/new function
@@ -61,7 +102,8 @@ function showHandeler(req, res) {
     let search = req.body.search;
     //inauthor
     //intitle:
-    let url = `https://www.googleapis.com/books/v1/volumes?q=${search}+${sort}:keyes`;
+    let url = `https://www.googleapis.com/books/v1/volumes?q=${search}+in${sort}`;
+            //    https://www.googleapis.com/books/v1/volumes?q=${search}+in${sort}
 
     superagent.get(url)
         .then(results => {
@@ -69,21 +111,21 @@ function showHandeler(req, res) {
             let book = data.map(item => {
                 return new Book(item);
             })
-            res.render('./pages/searches/show', { bookLists: book });
+            res.render('pages/searches/show', { bookLists: book });
         });
 };
 
 //get one book route
 function idhandeler(req, res) {
     let SQL = `SELECT * FROM books WHERE id = $1;`;
-    console.log(req.params.bookid)
+    // console.log(req.params.bookid)
     let safe = [req.params.bookid]
     client.query(SQL, safe).then(result => {
         res.render('pages/books/details', { book: result.rows[0] });
     })
-        .catch(error => {
-            console.log('error', error.message);
-        });
+    .catch(error => {
+        console.log('error', error.message);
+    });
 };
 
 
@@ -105,14 +147,12 @@ function bookshelfHandeler(req, res) {
                     .then((results) => {
                         res.redirect(`/book/${results.rows[0].id}`);
                     })
-                    .catch((error) => {
-                        console.log('Error: ', error);
-                    });
+                .catch((error) => {
+                    console.log('Error: ', error);
+                });
             }
         })
-        .catch((error) => {
-            console.log('Error: ', error);
-        });
+    .catch(errorHandeler);
 };
 
 //error function
@@ -128,7 +168,7 @@ function Book(data) {
     this.description = data.volumeInfo.description ? data.volumeInfo.description : 'No description for This Book';
     this.author = data.volumeInfo.authors ? data.volumeInfo.authors.join(" ") : "Author is Unknown"
 }
-
+app.use(errorHandeler);
 ////// listin //////
 client.connect()
     .then(() => {
