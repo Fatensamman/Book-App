@@ -1,5 +1,5 @@
 'use strict';
-let c = console
+
 //libraries
 const express = require('express');
 const cors = require('cors');
@@ -46,23 +46,23 @@ app.get('/book/update/:bookid', (req, res) => {
         .then(result => {
             res.render('pages/books/edit', { book: result.rows[0] });
         })
-    .catch(error => {
-        console.log('error', error.message);
-    });
+        .catch(error => {
+            console.log('error', error.message);
+        });
 });
 app.put('/book/:id', (req, res) => {
-    let { image, title, author, description } = req.body;
-    let SQL = `UPDATE books SET image=$1, title=$2, author=$3, description=$4 WHERE id =$5 RETURNING id;`;
-    let safeValues = [image, title, author, description, req.params.id];
+    let { image, title, author, description,isbn } = req.body;
+    let SQL = `UPDATE books SET image=$1, title=$2, author=$3, description=$4, isbn=$5 WHERE id =$6 RETURNING id;`;
+    let safeValues = [image, title, author, description, isbn, req.params.id];
 
     client.query(SQL, safeValues)
         .then((result) => {
             c.log('/books/:id,result', result)
             res.redirect(`/book/${result.rows[0].id}`);
         })
-    .catch((error) => {
-        console.log('Error: ', error.message);
-    });
+        .catch((error) => {
+            console.log('Error: ', error.message);
+        });
 
 })
 // delete 
@@ -73,9 +73,9 @@ app.delete('/book/:id', (req, res) => {
         .then((result) => {
             res.redirect(`/`);
         })
-    .catch((error) => {
-        console.log('Error: ', error.message);
-    });
+        .catch((error) => {
+            console.log('Error: ', error.message);
+        });
 })
 
 
@@ -86,9 +86,9 @@ function homeHandeler(req, res) {
     client.query(SQL).then(result => {
         res.render('./pages/index', { booksList: result.rows });
     })
-    // .catch((error => {
-    //     console.log(`error in home`, error);
-    // }));
+    .catch((error => {
+        console.log(`error in home`, error);
+    }));
 };
 
 //searches/new function
@@ -100,17 +100,19 @@ function navHandeler(req, res) {
 function showHandeler(req, res) {
     let sort = req.body.sort;
     let search = req.body.search;
-    //inauthor
-    //intitle:
     let url = `https://www.googleapis.com/books/v1/volumes?q=${search}+in${sort}`;
-            //    https://www.googleapis.com/books/v1/volumes?q=${search}+in${sort}
+    //    https://www.googleapis.com/books/v1/volumes?q=${search}+in${sort}
 
     superagent.get(url)
         .then(results => {
             let data = results.body.items;
+            // res.send(results.body.items);
             let book = data.map(item => {
+                // console.log(new Book(item))
                 return new Book(item);
+                
             })
+
             res.render('pages/searches/show', { bookLists: book });
         });
 };
@@ -123,22 +125,23 @@ function idhandeler(req, res) {
     client.query(SQL, safe).then(result => {
         res.render('pages/books/details', { book: result.rows[0] });
     })
-    .catch(error => {
-        console.log('error', error.message);
-    });
+        .catch(error => {
+            console.log('error', error.message);
+        });
 };
 
 
 //addbook to bookshelf
 function bookshelfHandeler(req, res) {
-    let { image, title, author, description } = req.body;
-    let SQL = `INSERT INTO books (image, title, author, description) VALUES($1, $2, $3, $4) RETURNING id;`;
-    let safeValues = [image, title, author, description];
+    let { image, title, author, description,isbn } = req.body;
+    let SQL = `INSERT INTO books (image, title, author, description,isbn) VALUES($1, $2, $3, $4,$5) RETURNING id;`;
+    let safeValues = [image, title, author, description,isbn];
     let SQL2 = `SELECT * FROM books WHERE title=$1;`;
     let value = [title];
 
     client.query(SQL2, value)
         .then((results) => {
+            // console.log(results.rows[0])
             if (results.rows[0]) {
                 res.redirect(`/book/${results.rows[0].id}`);
             } else {
@@ -147,12 +150,12 @@ function bookshelfHandeler(req, res) {
                     .then((results) => {
                         res.redirect(`/book/${results.rows[0].id}`);
                     })
-                .catch((error) => {
-                    console.log('Error: ', error);
-                });
+                    .catch((error) => {
+                        console.log('Error: ', error);
+                    });
             }
         })
-    .catch(errorHandeler);
+        .catch(errorHandeler);
 };
 
 //error function
@@ -164,9 +167,10 @@ function errorHandeler(req, res) {
 ////// constructors //////
 function Book(data) {
     this.image = data.volumeInfo.imageLinks.thumbnail ? data.volumeInfo.imageLinks.thumbnail : 'https://i.imgur.com/J5LVHEL.jpg';
-    this.title = data.volumeInfo.title ? data.volumeInfo.title : 'no title';
+    this.title = data.volumeInfo.title ? data.volumeInfo.title : 'No Title';
     this.description = data.volumeInfo.description ? data.volumeInfo.description : 'No description for This Book';
-    this.author = data.volumeInfo.authors ? data.volumeInfo.authors.join(" ") : "Author is Unknown"
+    this.author = data.volumeInfo.authors ? data.volumeInfo.authors.join(" ") : "Author is Unknown";
+    // this.isbn = data.volumeInfo.industryIdentifiers[0].identifier ? data.volumeInfo.industryIdentifiers[0].identifier : 'No ISBN'
 }
 app.use(errorHandeler);
 ////// listin //////

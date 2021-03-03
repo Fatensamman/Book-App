@@ -6,6 +6,8 @@
     <%- include('../../layout/header') %>
     
     <main>
+        <div class = "a"><h4>Searches Results</h4></div>
+
         <div class="template">
             <% bookLists.forEach(book=>{%>
                 <form action="/books" method="POST">
@@ -23,11 +25,14 @@
                         <%= book.author %>
                         <input type="hidden" value = "<%= book.author%>" name="author">
                     </p>
-                    <p>
+                    <p class ="description">
                         <%= book.description %>
                         <input type="hidden" value = "<%= book.description%>" name="description">
                     </p>
-                    <input type="submit" value = "Select this Book" class="submit">
+                    <p>
+                        <input type="hidden" value = "<%= book.isbn%>" name="isbn">
+                    </p>
+                    <button type="submit" value = "Select this Book" class="submit">Select this Book</button> 
                 </div>
             </form>
                 <% }); %>
