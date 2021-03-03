@@ -6,7 +6,7 @@
     <%- include('../layout/header') %>
 
     <main>
-        <div class = "a b"><h4>(<%=booksList.length%>)Saved Books</h4></div>
+        <div class = "a"><h4>(<%=booksList.length%>)Saved Books</h4></div>
 
         <div class="template">
             <% booksList.forEach(book=>{%>
@@ -21,10 +21,7 @@
                     <p>
                         <%= book.author %>
                     </p>
-                    <p>
-                        <%= book.description %>
-                    </p>
-                    <button><a href="/book/<%=book.id%>">View Detailes</a></button>
+                    <button class="submit"><a href="/book/<%=book.id%>">View Detailes</a></button>
                 </div>
                 <% }); %>
         </div>

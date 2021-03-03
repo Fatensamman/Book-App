@@ -4,9 +4,7 @@
 <body>
     <%- include('../../layout/header') %>
     <main>
-        <div class="title">
-            <h1>Search by Title or Author</h1>
-        </div>
+        <div class = "a"><h4> Search by Title or Author</h4></div>
         <div class="search">
             <form action="/searches" method="POST" id="forsearch">
                 <input type="text" name="search" id="search" placeholder="Enter a title or author">
@@ -20,7 +18,7 @@
                     <span>Author</span>
                     <input type="radio" name="sort" id="author" value="author">
                 </label>
-                <input type="submit" value ="Search the Google Books API">
+                <button type="submit" value ="Search the Google Books API" class = "submit">Search the Google Books API</button> 
             </form>
         </div>
     </main>

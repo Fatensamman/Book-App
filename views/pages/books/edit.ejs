@@ -5,9 +5,8 @@
     <body>
         <%- include('../../layout/header') %>
             <main>
-                <div class="title">
-                    <h1>ُEdit Book</h1>
-                </div>
+                <div class = "a"><h4> Edit Book</h4></div>
+                
                 <div class="search">
                     <form action="/book/<%= book.id %>?_method=put" method="POST">
                         <input type="text" name="image" id="image" value="<%= book.image%>">
@@ -15,7 +14,7 @@
                         <input type="text" name="author" id="author" value="<%= book.author%>">
                         <textarea name="description" id="description" cols="30"
                             rows="10"><%=book.decription%></textarea>
-                        <input type="submit" value="Update Book" class="submit">
+                        <button type="submit" value="Update Book" class="submit">Update Book</button>
                     </form>
                 </div>
             </main>
