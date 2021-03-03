@@ -20,8 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'))
 
-// const client = new pg.Client(process.env.DATABASE_URL);
-const client = new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false }, });
+const client = new pg.Client(process.env.DATABASE_URL);
+// const client = new pg.Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false }, });
 
 
 
@@ -51,13 +51,12 @@ app.get('/book/update/:bookid', (req, res) => {
         });
 });
 app.put('/book/:id', (req, res) => {
-    let { image, title, author, description, } = req.body;
-    let SQL = `UPDATE books SET image=$1, title=$2, author=$3, description=$4, =$5 WHERE id =$6 RETURNING id;`;
-    let safeValues = [image, title, author, description, , req.params.id];
+    let { image, title, author, description } = req.body;
+    let SQL = `UPDATE books SET image=$1, title=$2, author=$3, description=$4 WHERE id =$5 RETURNING id;`;
+    let safeValues = [image, title, author, description, req.params.id];
 
     client.query(SQL, safeValues)
         .then((result) => {
-            c.log('/books/:id,result', result)
             res.redirect(`/book/${result.rows[0].id}`);
         })
         .catch((error) => {
@@ -133,9 +132,9 @@ function idhandeler(req, res) {
 
 //addbook to bookshelf
 function bookshelfHandeler(req, res) {
-    let { image, title, author, description, } = req.body;
-    let SQL = `INSERT INTO books (image, title, author, description,) VALUES($1, $2, $3, $4,$5) RETURNING id;`;
-    let safeValues = [image, title, author, description,];
+    let { image, title, author, description } = req.body;
+    let SQL = `INSERT INTO books (image, title, author, description) VALUES($1, $2, $3, $4) RETURNING id;`;
+    let safeValues = [image, title, author, description];
     let SQL2 = `SELECT * FROM books WHERE title=$1;`;
     let value = [title];
 
