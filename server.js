@@ -51,9 +51,9 @@ app.get('/book/update/:bookid', (req, res) => {
         });
 });
 app.put('/book/:id', (req, res) => {
-    let { image, title, author, description,isbn } = req.body;
-    let SQL = `UPDATE books SET image=$1, title=$2, author=$3, description=$4, isbn=$5 WHERE id =$6 RETURNING id;`;
-    let safeValues = [image, title, author, description, isbn, req.params.id];
+    let { image, title, author, description, } = req.body;
+    let SQL = `UPDATE books SET image=$1, title=$2, author=$3, description=$4, =$5 WHERE id =$6 RETURNING id;`;
+    let safeValues = [image, title, author, description, , req.params.id];
 
     client.query(SQL, safeValues)
         .then((result) => {
@@ -86,9 +86,9 @@ function homeHandeler(req, res) {
     client.query(SQL).then(result => {
         res.render('./pages/index', { booksList: result.rows });
     })
-    .catch((error => {
-        console.log(`error in home`, error);
-    }));
+        .catch((error => {
+            console.log(`error in home`, error);
+        }));
 };
 
 //searches/new function
@@ -110,7 +110,7 @@ function showHandeler(req, res) {
             let book = data.map(item => {
                 // console.log(new Book(item))
                 return new Book(item);
-                
+
             })
 
             res.render('pages/searches/show', { bookLists: book });
@@ -133,9 +133,9 @@ function idhandeler(req, res) {
 
 //addbook to bookshelf
 function bookshelfHandeler(req, res) {
-    let { image, title, author, description,isbn } = req.body;
-    let SQL = `INSERT INTO books (image, title, author, description,isbn) VALUES($1, $2, $3, $4,$5) RETURNING id;`;
-    let safeValues = [image, title, author, description,isbn];
+    let { image, title, author, description, } = req.body;
+    let SQL = `INSERT INTO books (image, title, author, description,) VALUES($1, $2, $3, $4,$5) RETURNING id;`;
+    let safeValues = [image, title, author, description,];
     let SQL2 = `SELECT * FROM books WHERE title=$1;`;
     let value = [title];
 
@@ -170,7 +170,7 @@ function Book(data) {
     this.title = data.volumeInfo.title ? data.volumeInfo.title : 'No Title';
     this.description = data.volumeInfo.description ? data.volumeInfo.description : 'No description for This Book';
     this.author = data.volumeInfo.authors ? data.volumeInfo.authors.join(" ") : "Author is Unknown";
-    // this.isbn = data.volumeInfo.industryIdentifiers[0].identifier ? data.volumeInfo.industryIdentifiers[0].identifier : 'No ISBN'
+    // this.isbin = data.volumeInfo.industryIdentifiers[0].identifier ? data.volumeInfo.industryIdentifiers[0].identifier : 'No isbin '
 }
 app.use(errorHandeler);
 ////// listin //////

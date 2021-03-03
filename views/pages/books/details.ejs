@@ -20,9 +20,6 @@
                         <p class="description">
                             <%= book.description %>
                         </p>
-                        <p>
-                            <%=book.isbn %>
-                        </p>
                         <button class="submit"><a href="/book/update/<%=book.id%>">Update Detailes</a></button>
 
                         <form action="/book/<%=book.id%>?_method=delete" method="POST">
